@@ -31,3 +31,11 @@ SSE4
 RMSE4 <- sqrt(SSE4/nrow(NBA_train))
 RMSE4
 
+# Predictions of the 12-13 season, using the NBA_test data
+PointsPrediction <- predict(PointsReg4, newdata = NBA_test)
+SSE_test <- sum((PointsPrediction - NBA_test$PTS)^2)
+SST_test <- sum((mean(NBA_train$PTS) - NBA_test$PTS)^2)
+R2 <- 1 - SSE/SST
+R2
+RMSE_test <- sqrt(SSE/nrow(NBA_test))
+RMSE_test
