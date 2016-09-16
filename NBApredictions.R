@@ -9,3 +9,25 @@ table(NBA_train$W, NBA_train$Playoffs)
 NBA_train$PTSdiff <- NBA_train$PTS - NBA_train$oppPTS
 plot(NBA_train$PTSdiff, NBA_train$W)
 WinsReg <- lm(W~PTSdiff, data = NBA_train)
+summary(WinsReg)
+# Points scored and wins
+PointsReg <- lm(PTS~ X2PA + X3PA + FTA + AST + ORB + DRB + TOV + STL + BLK, data = NBA_train)
+summary(PointsReg)
+SSE <- sum(PointsReg$residuals^2)
+SSE
+RMSE <- sqrt(SSE/nrow(NBA_train))
+RMSE
+# Regression without turnovers
+PointsReg2 <- lm(PTS~ X2PA + X3PA + FTA + AST + ORB + DRB + STL + BLK, data = NBA_train)
+summary(PointsReg2)
+# Regression without DRB
+PointsReg3 <- lm(PTS ~ X2PA + X3PA + FTA + AST + ORB + STL + BLK, data = NBA_train)
+summary(PointsReg3)
+# Regression without blocks
+PointsReg4 <- lm(PTS ~ X2PA + X3PA + FTA + AST + ORB + STL, data = NBA_train)
+summary(PointsReg4)
+SSE4 <- sum(PointsReg4$residuals^2)
+SSE4
+RMSE4 <- sqrt(SSE4/nrow(NBA_train))
+RMSE4
+
