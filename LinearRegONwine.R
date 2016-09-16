@@ -24,3 +24,4 @@ SSE3
 cor(wine$WinterRain, wine$Price)
 cor(wine$Age, wine$FrancePop)
 # Because of multicollinearity, only want to remove one feature at a time to make sure you don't completely screw up the model
+# To verify the model, run it against the test set data did with different features. Map against eachother and use appropriate model and features based off the best R^2 values between both the training data and the model data.
