@@ -19,3 +19,4 @@ model3 <- lm(Price ~ AGST + HarvestRain + WinterRain + Age + FrancePop, data = w
 summary(model3)
 SSE3 <- sum(model3$residuals^2)
 SSE3
+# To understand which variables help the model predict wine price, look at the summary of the data, and see which variables have a ***, **, *, ., or ' ' by their name. Features that help predict the output will have asterisks
