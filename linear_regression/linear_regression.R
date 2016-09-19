@@ -224,4 +224,5 @@ coef(summary(lm(energy ~ metro*green + C(region, base=4),
 # change the coding scheme
 coef(summary(lm(energy ~ metro*green + C(region, contr.helmert),
                 data=states.data)))
-# Looks like there is no distinguishable difference between region and energy use. 
+# Looks like there is no distinguishable difference between region and energy use. All p-values are greater than .05, which is a 
+# very high minimum for statistical significance.
