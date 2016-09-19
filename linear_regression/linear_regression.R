@@ -219,13 +219,9 @@ states.data$region <- factor(states.data$region)
 # print default contrasts
 contrasts(states.data$region)
 # change the reference group
-coef(summary(lm(energy ~ C(region, base=4),
+coef(summary(lm(energy ~ metro*green + C(region, base=4),
                 data=states.data)))
 # change the coding scheme
-coef(summary(lm(energy ~ C(region, contr.helmert),
+coef(summary(lm(energy ~ metro*green + C(region, contr.helmert),
                 data=states.data)))
-
-lsr <- lm(energy ~ region,
-          data = na.omit(states.data))
-summary(lsr)
-plot(lsr)
+# Looks like there is no distinguishable difference between region and energy use. 
