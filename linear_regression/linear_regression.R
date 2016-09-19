@@ -27,7 +27,7 @@ list.files("dataSets") # files in the dataSets folder
 ## ────────────────────────
 
 # read the states data
-states.data <- readRDS("dataSets/states.rds") 
+states.data <- readRDS("linear_regression/dataSets/states.rds") 
 #get labels
 states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
 #look at last few labels
@@ -124,7 +124,6 @@ anova(sat.mod, sat.voting.mod)
 coef(summary(sat.voting.mod))
 
 ## Exercise: least squares regression
-## ────────────────────────────────────────
 
 ##   Use the /states.rds/ data set. Fit a model predicting energy consumed
 ##   per capita (energy) from the percentage of residents living in
@@ -132,10 +131,19 @@ coef(summary(sat.voting.mod))
 ##   1. Examine/plot the data before fitting the model
 ##   2. Print and interpret the model `summary'
 ##   3. `plot' the model to look for deviations from modeling assumptions
+plot(states.data$metro, states.data$energy)
+lsr <- lm(energy ~ metro,
+          data = na.omit(states.data))
+summary(lsr)
+plot(lsr)
 
 ##   Select one or more additional predictors to add to your model and
 ##   repeat steps 1-3. Is this model significantly better than the model
 ##   with /metro/ as the only predictor?
+lsr <- lm(energy ~ metro + green + toxic,
+          data = na.omit(states.data))
+summary(lsr)
+plot(lsr)
 
 ## Interactions and factors
 ## ══════════════════════════
@@ -194,12 +202,30 @@ coef(summary(lm(csat ~ C(region, contr.helmert),
 ##   See also `?contrasts', `?contr.treatment', and `?relevel'.
 
 ## Exercise: interactions and factors
-## ────────────────────────────────────────
 
 ##   Use the states data set.
 
 ##   1. Add on to the regression equation that you created in exercise 1 by
 ##      generating an interaction term and testing the interaction.
-
+lsr <- lm(energy ~ metro*green,
+          data = na.omit(states.data))
+summary(lsr)
+plot(lsr)
 ##   2. Try adding region to the model. Are there significant differences
 ##      across the four regions?
+str(states.data$region)
+states.data$region <- factor(states.data$region)
+
+# print default contrasts
+contrasts(states.data$region)
+# change the reference group
+coef(summary(lm(energy ~ C(region, base=4),
+                data=states.data)))
+# change the coding scheme
+coef(summary(lm(energy ~ C(region, contr.helmert),
+                data=states.data)))
+
+lsr <- lm(energy ~ region,
+          data = na.omit(states.data))
+summary(lsr)
+plot(lsr)
